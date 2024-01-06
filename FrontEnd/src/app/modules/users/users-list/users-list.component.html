@@ -1,0 +1,54 @@
+<div class="d-flex">
+    <div style="height: 450px; width: 150px;" class="sidebar bg-info text-light p-4 d-flex flex-column">
+        <a routerLink="" style="text-decoration: none; color:white; margin: 15px;">Home</a>
+        <a routerLink="" style="text-decoration: none; color:white; margin: 15px;">Users</a>
+    </div>
+    <div class="col-7 justify-content-center">
+        <p class="ms-3">current date and time : {{adminLoginTime|date:'medium'}}</p>
+        <div class="d-flex justify-content-between ms-3">
+            <h1>Users List</h1>
+            <button  routerLink="add" class="btn btn-info text-light">Add</button>
+        </div>
+        <div class="d-flex justify-content-center align-items-center col-8 mt-3">
+            <input type="text" placeholder="Search by name" [(ngModel)]="searchUser" class="form-control ms-5">
+            <div class="ms-2">
+                <button class="btn btn-warning" mat-button [matMenuTriggerFor]="menu">Sort</button>
+                <mat-menu #menu="matMenu">
+                    <button (click)="sortUsersById()" mat-menu-item>Sort by Id</button>
+                    <button (click)="sortUsersByName()" mat-menu-item>Sort by Name</button>
+                </mat-menu>
+            </div>
+            <div>
+                <button (click)="generatePDF()" class="btn btn-success ms-2">Export PDF</button>
+            </div>
+        </div>
+        <div >
+            <table class="table m-5">
+                <thead>
+                    <tr>
+                        <th scope="col">User Id</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let users of allUsers | search:searchUser | paginate: { itemsPerPage: 3, currentPage: p }" [hidden]="users.id=='1'">
+                        <th class="p-3" scope="row">{{users.id}}</th>
+                        <td class="p-3">{{users.name}}</td>
+                        <td class="p-3">{{users.email}}</td>
+                        <td class="p-3" [ngClass]="users.active=='1'?'btn bg-success text-light fw-bold':'btn bg-info text-light fw-bold'">{{users.active=='1'?'Active' : 'Inactive'}} </td>
+                        <td>
+                            <i routerLink="edit/{{users.id}}" class="fa-solid fa-pen text-primary me-4"></i>
+                            <i (click)="deleteUser(users.id)" class="fa-solid fa-trash text-danger"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <!-- image -->
+            <img src="https://t3.ftcdn.net/jpg/03/39/70/90/360_F_339709048_ZITR4wrVsOXCKdjHncdtabSNWpIhiaR7.jpg" alt=""
+                height="300px" width="500px">
+        </div>
+        <div class="col-6">
+            <!-- login form -->
+            <form (ngSubmit)="login()" #loginForm="ngForm">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input name="email" [(ngModel)]="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required #useremailinput="ngModel">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div *ngIf="useremailinput.invalid && useremailinput.touched" class="my-3 text-danger fw-bolder">
+                    <p>*Invalid email</p>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input  name="password" [(ngModel)]="password" type="password" class="form-control" id="exampleInputPassword1" #userpasswordinput="ngModel">
+                </div>
+                <div *ngIf="userpasswordinput.invalid && userpasswordinput.touched" class="my-3 text-danger fw-bolder">
+                    <p>*Invalid password</p>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+                <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
